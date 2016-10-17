@@ -1,28 +1,35 @@
 # Try on Katacoda https://www.katacoda.com/courses/docker-performance/iperf
 
-Launch Container with Host Networking
-> docker run -it --net=host benhall/iperf iperf -s
+iPerf server on the host
+> iperf -s -p 5002
+
+Docker Port Mapping
+> docker run -d -p 5001:5001 --name mapped-iperf benhall/iperf iperf -s
+> iperf -c localhost
+
+Docker Links
+> docker run -d --name link-server benhall/iperf iperf -s
+> docker run -it --link link-server:server benhall/iperf iperf -c server
+
+
+Docker Network
+> docker network create iperf
+> docker run -d --net=iperf --name network-server benhall/iperf iperf -s
+> docker run -it --net=iperf benhall/iperf iperf -c network-server
+
+
+Shared Network Namespace
+> docker run -d --name shared-server benhall/iperf iperf -s
+> docker run -it --net=container:shared-server benhall/iperf iperf -c localhost
 
 On the host, you can do (Caution: boot2docker is not localhost.)
 > iperf -c localhost
 
-Docker cient on host network
-> docker run -it --net=host benhall/iperf iperf -c localhost
 
-Docker Port Mapping
-> docker run -d -p 5001:5001 benhall/iperf iperf -s
+Docker client on host network
+> docker run -it --net=host benhall/iperf iperf -c localhost -p 5002
+
+Docker Server on host network
+> docker rm -f mapped-iperf
+> docker run -d --net=host benhall/iperf iperf -s
 > iperf -c localhost
-
-Docker Network
-> docker network create iperf
-> docker run -it --net=iperf --name network-server benhall/iperf iperf -s
-> docker run -it --net=iperf benhall/iperf iperf -c network-server
-
-
-Docker Links
-> docker run -it --name link-server benhall/iperf iperf -s
-> docker run -it --link link-server:server benhall/iperf iperf -c server
-
-Shared Network Namespace
-> docker run -it --name shared-server benhall/iperf iperf -s
-> docker run -it --net=container:shared-server benhall/iperf iperf -c server

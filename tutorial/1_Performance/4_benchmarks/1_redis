@@ -1,3 +1,5 @@
+# Use Katacoda at https://www.katacoda.com/courses/docker-performance/brenchmarks
+
 # Redis in one container, CLI in another (like a web-app)
 # Use Docker exec to test localhost within a container
 
@@ -12,7 +14,7 @@ redis-benchmark -h localhost -t ping,set,get -n 10000 --csv
 
 
 # Container > Host (This will have VBox overhead on b2d)
-# Katacoda.com/ben_hall/scenarios/13 <--- Can install redis on host
+
 
 docker run -p 6379:6379 redis:3.2-alpine
 redis-benchmark -h 192.168.99.100 -t ping,set,get -n 10000 --csv

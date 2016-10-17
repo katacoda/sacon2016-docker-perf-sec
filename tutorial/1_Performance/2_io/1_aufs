@@ -5,12 +5,17 @@
 # docker info
   # Storage Driver: aufs
 
+echo 'FROM ubuntu'>> Dockerfile
+echo 'VOLUME /data'>> Dockerfile
+echo 'RUN mkdir /data-notmapped' >> Dockerfile
+
+
 docker run -it -v /data-mapped:/data-mapped benhall/ioperf-example bash
 
 WRITE SPEED
-dd if=/dev/zero of=/data-mapped/largefile bs=1M count=1024
-dd if=/dev/zero of=/data/largefile bs=1M count=1024
-dd if=/dev/zero of=/data-notmapped/largefile bs=1M count=1024
+dd if=/dev/zero of=/data-mapped/largefile bs=1M count=100
+dd if=/dev/zero of=/data/largefile bs=1M count=100
+dd if=/dev/zero of=/data-notmapped/largefile bs=1M count=100
 
 
 READ SPEED

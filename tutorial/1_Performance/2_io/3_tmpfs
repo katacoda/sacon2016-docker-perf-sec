@@ -1,3 +1,5 @@
 docker run -it --tmpfs=/tmp2 ubuntu bash
 
+dd if=/dev/zero of=/tmp2/largefile bs=1M count=100
+
 dd if=/dev/zero of=/tmp2/large bs=1M count=64

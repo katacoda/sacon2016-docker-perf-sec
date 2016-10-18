@@ -20,10 +20,7 @@ pgbench --username=postgres -c 64 -j 4 -T 15 test # Heavy Contention
 # Run Benchmarks over Bridge
 docker run -it --link pg:pg benhall/oscon2016-pg bash
 
-# Shared Namespace
-docker run -it --net=container:pg benhall/oscon2016-pg bash
-
-# Different Tests
+# Different Tests (password is mysecretpassword)
 pgbench --host=pg --username=postgres -t 2000 -c 10 -S test
 pgbench --host=pg --username=postgres -i -s 70 test
 pgbench --host=pg --username=postgres -c 4 -j 2 -T 15 test # Read-Write Test
@@ -32,3 +29,16 @@ pgbench --host=pg --username=postgres -c 4 -j 2 -T 15 -N test # Simple Write Tes
 
 pgbench --host=pg --username=postgres -i -s 30 test
 pgbench --host=pg --username=postgres -c 64 -j 4 -T 15 test # Heavy Contention
+
+# Shared Namespace
+docker run -it --net=container:pg benhall/oscon2016-pg bash
+
+# Different Tests
+pgbench --host=localhost --username=postgres -t 2000 -c 10 -S test
+pgbench --host=localhost --username=postgres -i -s 70 test
+pgbench --host=localhost --username=postgres -c 4 -j 2 -T 15 test # Read-Write Test
+pgbench --host=localhost --username=postgres -c 4 -j 2 -T 15 -S test # Read-Only Test
+pgbench --host=localhost --username=postgres -c 4 -j 2 -T 15 -N test # Simple Write Test
+
+pgbench --host=localhost --username=postgres -i -s 30 test
+pgbench --host=localhost --username=postgres -c 64 -j 4 -T 15 test # Heavy Contention

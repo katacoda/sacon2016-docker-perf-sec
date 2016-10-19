@@ -2,6 +2,7 @@
 
 iPerf server on the host
 > iperf -s -p 5002
+> iperf -c localhost -p 5002
 
 Docker Port Mapping
 > docker run -d -p 5001:5001 --name mapped-iperf benhall/iperf iperf -s
